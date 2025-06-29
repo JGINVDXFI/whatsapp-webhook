@@ -1,4 +1,4 @@
-import forwardToVenomBot from "../utils/forwardToVenomBot";
+import forwardToVenomBot from "../../utils/forwardToVenomBot";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -11,6 +11,7 @@ export default async function handler(req, res) {
     await forwardToVenomBot(data);
     res.status(200).send("✅ Order forwarded to venom-bot server");
   } catch (error) {
+    console.error("❌ Error forwarding order:", error.message);
     res.status(500).send("❌ Error forwarding order: " + error.message);
   }
 }
