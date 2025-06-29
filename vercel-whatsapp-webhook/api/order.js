@@ -1,4 +1,5 @@
-import forwardToVenomBot from "../../utils/forwardToVenomBot";
+ import forwardToVenomBot from "../utils/forwardToVenomBot";
+
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
