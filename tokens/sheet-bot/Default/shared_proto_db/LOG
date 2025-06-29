@@ -1,0 +1,4 @@
+2025/06/26-23:02:37.721 325c Creating DB C:\Users\Sony\Desktop\TRADING\tokens\sheet-bot\Default\shared_proto_db since it was missing.
+2025/06/26-23:02:37.734 325c Reusing MANIFEST C:\Users\Sony\Desktop\TRADING\tokens\sheet-bot\Default\shared_proto_db/MANIFEST-000001
+2025/06/26-23:02:37.735 325c Recovering log #3
+2025/06/26-23:02:37.737 325c Reusing old log C:\Users\Sony\Desktop\TRADING\tokens\sheet-bot\Default\shared_proto_db/000003.log 

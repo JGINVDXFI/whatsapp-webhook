@@ -1,0 +1,6 @@
+2025/06/26-23:00:49.538 3830 Creating DB C:\Users\Sony\Desktop\TRADING\tokens\sheet-bot\Default\Local Storage\leveldb since it was missing.
+2025/06/26-23:00:49.609 3830 Reusing MANIFEST C:\Users\Sony\Desktop\TRADING\tokens\sheet-bot\Default\Local Storage\leveldb/MANIFEST-000001
+2025/06/26-23:00:49.619 3830 Recovering log #7
+2025/06/26-23:00:49.629 3830 Reusing old log C:\Users\Sony\Desktop\TRADING\tokens\sheet-bot\Default\Local Storage\leveldb/000007.log 
+2025/06/26-23:00:49.631 3830 Delete type=2 #5
+2025/06/26-23:00:49.631 3830 Delete type=2 #8
