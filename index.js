@@ -95,7 +95,6 @@ async function updateAllWebhookFiles() {
   }
 }
 
-
 // ✅ Send WhatsApp message
 async function sendWhatsAppMessage(numbers, message) {
   if (!venomClient) {
@@ -131,6 +130,7 @@ function startVenom() {
       setTimeout(startVenom, 10000);
     });
 }
+
 // ✅ Venom Health Check
 app.get("/api/venom-status", (req, res) => {
   if (venomClient) {
@@ -143,6 +143,8 @@ app.get("/api/venom-status", (req, res) => {
 // ✅ Handle MT4 webhook
 app.post("/api/order", async (req, res) => {
   const data = req.body;
+  console.log("📨 Received order from Vercel:", data);
+
   if (!data.sheet) return res.status(400).send("❌ Missing sheet name");
 
   const adminNumbers = sheetAdmins[data.sheet];
@@ -150,14 +152,12 @@ app.post("/api/order", async (req, res) => {
     log(`⚠️ No admins for: ${data.sheet}`);
     return res.status(404).send(`⚠️ No admin for ${data.sheet}`);
   }
-
   const ticketKey = `${data.sheet}-${data.ticket}-${data.status}`;
   if (sentTickets.has(ticketKey)) {
     log(`🟡 Duplicate ignored: ${ticketKey}`);
     return res.send("🟡 Duplicate message");
   }
-
-  const now = new Date();
+ const now = new Date();
   const dateTime = now.toLocaleString("en-GB", { timeZone: "Asia/Kolkata" });
 
   let message = "";
@@ -172,7 +172,9 @@ app.post("/api/order", async (req, res) => {
 
   await sendWhatsAppMessage(adminNumbers, message);
   sentTickets.add(ticketKey);
+
   fs.appendFileSync("logs/order_log.txt", `${dateTime} - ${message}\n`);
+
   return res.send(`✅ Sent to ${adminNumbers.length} admins`);
 });
 
