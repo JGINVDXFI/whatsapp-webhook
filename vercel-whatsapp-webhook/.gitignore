@@ -1,0 +1,30 @@
+# Ignore node modules
+node_modules/
+
+# Ignore tokens and sensitive session folders
+tokens/
+tokens/whatsapp-bot/
+
+# Ignore environment variables
+.env
+.env.local
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore ngrok config/tunnel files if any
+.ngrok2/
+
+# Ignore Vercel output folders if created locally
+.vercel/
+
+# Ignore package lock files if using yarn (optional)
+yarn.lock
+
+# Ignore IDE config folders
+.vscode/
+.idea/
