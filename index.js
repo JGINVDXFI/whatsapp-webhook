@@ -152,6 +152,8 @@ app.post("/api/order", async (req, res) => {
     log(`⚠️ No admins for: ${data.sheet}`);
     return res.status(404).send(`⚠️ No admin for ${data.sheet}`);
   }
+});
+
   const ticketKey = `${data.sheet}-${data.ticket}-${data.status}`;
   if (sentTickets.has(ticketKey)) {
     log(`🟡 Duplicate ignored: ${ticketKey}`);
