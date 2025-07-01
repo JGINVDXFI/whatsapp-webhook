@@ -113,32 +113,28 @@ async function sendWhatsAppMessage(numbers, message) {
   }
 }
 
-// ✅ Start Venom bot
+// ✅ Venom Init
 function startVenom() {
-  venom.create({
-    session: "whatsapp-bot",
-    headless: false,
-    useChrome: true,
-    executablePath: process.env.CHROME_PATH
-  })
-    .then(client => {
+  venom
+    .create({
+      session: "whatsapp-bot",
+      headless: true,
+      useChrome: true,
+      executablePath:
+        process.env.CHROME_PATH ||
+        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      browserArgs: ["--no-sandbox", "--disable-setuid-sandbox"],
+    })
+    .then((client) => {
       venomClient = client;
       log("✅ Venom connected");
     })
-    .catch(err => {
+    .catch((err) => {
       log("❌ Venom init failed: " + err.message);
       setTimeout(startVenom, 10000);
     });
 }
 
-// ✅ Venom Health Check
-app.get("/api/venom-status", (req, res) => {
-  if (venomClient) {
-    res.send("✅ Venom is connected");
-  } else {
-    res.status(503).send("❌ Venom is NOT connected");
-  }
-});
 
 // ✅ Handle MT4 webhook
 app.post("/api/order", async (req, res) => {
