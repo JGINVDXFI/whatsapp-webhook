@@ -7,6 +7,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import venom from "venom-bot";
 
+
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -18,14 +19,16 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// ✅ Globals
 let venomClient = null;
 let currentWebhookURL = "";
 const sentTickets = new Set();
 
+// ✅ Logging
 const log = (msg) =>
   console.log(`[${new Date().toLocaleString("en-IN")}] ${msg}`);
 
-// ✅ Sheet-to-Admin Mapping
+// ✅ Admin Mapping
 const sheetAdmins = {
   Grid: ["919814953007", "917009522677", "919417270987", "919878998780"],
   Economy: ["919501649616", "918725998919", "7973741924"],
@@ -36,6 +39,22 @@ const sheetAdmins = {
   AllButtons: ["919814953007", "917009522677"],
   TwoPair: ["917009522677", "918728067795"],
 };
+
+// ✅ Save fixed webhook URL to include/webhook_url.mqh
+function saveWebhookDefineToMQH() {
+  try {
+    const mqhPath = path.join(__dirname, "include", "webhook_url.mqh");
+    const fixedURL = "https://whatsapp-webhook-eta-lilac.vercel.app/api/order";
+    const defineLine = `#define NODE_WEBHOOK_URL   "${fixedURL}"\n`;
+
+    fs.mkdirSync(path.dirname(mqhPath), { recursive: true });
+    fs.writeFileSync(mqhPath, defineLine);
+
+    log("📝 webhook_url.mqh updated at: " + mqhPath);
+  } catch (err) {
+    log("❌ Failed to write webhook_url.mqh: " + err.message);
+  }
+}
 
 // ✅ Update webhook_url.mqh and webhook_url.txt
 async function updateAllWebhookFiles() {
@@ -71,7 +90,7 @@ async function updateAllWebhookFiles() {
   }
 }
 
-// ✅ Send WhatsApp message
+// ✅ WhatsApp Sender
 async function sendWhatsAppMessage(numbers, message) {
   if (!venomClient) return log("❌ Venom not ready");
 
@@ -86,7 +105,7 @@ async function sendWhatsAppMessage(numbers, message) {
   }
 }
 
-// ✅ Start Venom Bot (skip in production)
+// ✅ Venom Bot Setup (skip in production)
 function startVenom() {
   if (process.env.NODE_ENV === "production") {
     log("⚠️ Venom Bot is disabled in production.");
@@ -117,29 +136,20 @@ function startVenom() {
     })
     .catch((err) => {
       log("❌ Venom init failed: " + err.message);
-      setTimeout(startVenom, 10000);
+      setTimeout(startVenom, 10000); // Retry
     });
 }
-// ✅ Health Check Route
-app.get("/", (req, res) => {
-  res.send("🟢 Node WhatsApp API is up!");
-});
 
-// ✅ Test Route
-app.get("/test", (req, res) => {
-  res.send("✅ API working fine!");
-});
+// ✅ Health Routes
+app.get("/", (req, res) => res.send("🟢 Node WhatsApp API is up!"));
+app.get("/test", (req, res) => res.send("✅ API working fine!"));
+app.get("/current-url", (req, res) =>
+  currentWebhookURL
+    ? res.send(currentWebhookURL)
+    : res.status(404).send("Webhook URL not available")
+);
 
-// ✅ Current Webhook URL route
-app.get("/current-url", (req, res) => {
-  if (currentWebhookURL) {
-    res.send(currentWebhookURL);
-  } else {
-    res.status(404).send("Webhook URL not available");
-  }
-});
-
-// ✅ Handle incoming webhook from MT4
+// ✅ Main MT4 Order POST Handler
 app.post("/api/order", async (req, res) => {
   log("✅ POST /api/order hit");
   const data = req.body;
@@ -176,25 +186,18 @@ app.post("/api/order", async (req, res) => {
   await sendWhatsAppMessage(adminNumbers, message);
   sentTickets.add(ticketKey);
 
+  fs.mkdirSync("logs", { recursive: true });
   fs.appendFileSync("logs/order_log.txt", `${dateTime} - ${message}\n`);
+
   res.send(`✅ Sent to ${adminNumbers.length} admins`);
 });
 
-// ✅ Routes
-app.get("/", (req, res) => res.send("🟢 Node WhatsApp API is up!"));
-app.get("/test", (req, res) => res.send("✅ API working fine!"));
-app.get("/current-url", (req, res) =>
-  currentWebhookURL
-    ? res.send(currentWebhookURL)
-    : res.status(404).send("Webhook URL not available")
-);
-
-// ✅ 404 Catch-All Handler
+// ✅ 404 Handler
 app.use((req, res) => {
   res.status(404).send(`❌ Route not found: ${req.method} ${req.originalUrl}`);
 });
 
-// ✅ Scheduled Jobs
+// ✅ Auto Jobs
 setInterval(() => {
   sentTickets.clear();
   log("♻️ Cleared ticket cache");
@@ -202,12 +205,15 @@ setInterval(() => {
 
 setInterval(updateAllWebhookFiles, 15 * 60 * 1000);
 
-// ✅ Init everything
+// ✅ Init
 updateAllWebhookFiles();
+saveWebhookDefineToMQH();
 startVenom();
+
+// ✅ Start Express Server
 app.listen(PORT, () => log(`🟢 API running at http://localhost:${PORT}`));
 
-// ✅ CLI Test
+// ✅ Manual CLI test
 if (process.argv.includes("--test-send")) {
   sendWhatsAppMessage(["919814953007"], "🧪 *Test message from Node API*");
 }
