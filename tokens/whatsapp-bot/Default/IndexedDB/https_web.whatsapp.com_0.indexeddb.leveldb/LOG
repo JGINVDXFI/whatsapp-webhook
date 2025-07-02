@@ -1,0 +1,25 @@
+2025/07/02-13:32:14.959 30c0 Reusing MANIFEST C:\Users\Sony\Desktop\TRADING\tokens\whatsapp-bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/07/02-13:32:14.960 30c0 Recovering log #371
+2025/07/02-13:32:14.967 30c0 Reusing old log C:\Users\Sony\Desktop\TRADING\tokens\whatsapp-bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000371.log 
+2025/07/02-13:32:14.968 30c0 Delete type=2 #365
+2025/07/02-13:32:14.968 30c0 Delete type=2 #366
+2025/07/02-13:32:14.968 30c0 Delete type=2 #367
+2025/07/02-13:32:14.968 30c0 Delete type=2 #368
+2025/07/02-13:32:14.969 30c0 Delete type=2 #370
+2025/07/02-13:32:14.969 30c0 Delete type=2 #373
+2025/07/02-13:32:17.379 2b7c Level-0 table #380: started
+2025/07/02-13:32:17.388 2b7c Level-0 table #380: 77685 bytes OK
+2025/07/02-13:32:17.391 2b7c Delete type=0 #371
+2025/07/02-13:32:17.394 30c0 Manual compaction at level-0 from '\x006\x00\x00\x00' @ 72057594037927935 : 1 .. '\x007\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/07/02-13:32:17.446 2ff8 Compacting 1@1 + 4@2 files
+2025/07/02-13:32:17.721 2ff8 Generated table #381@1: 46791 keys, 2207549 bytes
+2025/07/02-13:32:17.861 2ff8 Generated table #382@1: 10448 keys, 2165536 bytes
+2025/07/02-13:32:18.060 2ff8 Generated table #383@1: 26539 keys, 2193126 bytes
+2025/07/02-13:32:18.412 2ff8 Generated table #384@1: 110529 keys, 2223825 bytes
+2025/07/02-13:32:18.412 2ff8 Compacted 1@1 + 4@2 files => 8790036 bytes
+2025/07/02-13:32:18.414 2ff8 compacted to: files[ 0 0 4 0 0 0 0 ]
+2025/07/02-13:32:18.415 2ff8 Delete type=2 #374
+2025/07/02-13:32:18.415 2ff8 Delete type=2 #375
+2025/07/02-13:32:18.415 2ff8 Delete type=2 #376
+2025/07/02-13:32:18.415 2ff8 Delete type=2 #377
+2025/07/02-13:32:18.416 2ff8 Delete type=2 #380

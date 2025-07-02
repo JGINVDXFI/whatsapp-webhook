@@ -1,0 +1,52 @@
+hint: core.useBuiltinFSMonitor=true is deprecated;please set core.fsmonitor=true instead
+hint: Disable this message with "git config advice.useCoreFSMonitorConfig false"
+[1mdiff --git a/index.js b/index.js[m
+[1mindex c6fcbc7..69a250d 100644[m
+[1m--- a/index.js[m
+[1m+++ b/index.js[m
+[36m@@ -113,32 +113,28 @@[m [masync function sendWhatsAppMessage(numbers, message) {[m
+   }[m
+ }[m
+ [m
+[31m-// ✅ Start Venom bot[m
+[32m+[m[32m// ✅ Venom Init[m
+ function startVenom() {[m
+[31m-  venom.create({[m
+[31m-    session: "whatsapp-bot",[m
+[31m-    headless: false,[m
+[31m-    useChrome: true,[m
+[31m-    executablePath: process.env.CHROME_PATH[m
+[31m-  })[m
+[31m-    .then(client => {[m
+[32m+[m[32m  venom[m
+[32m+[m[32m    .create({[m
+[32m+[m[32m      session: "whatsapp-bot",[m
+[32m+[m[32m      headless: true,[m
+[32m+[m[32m      useChrome: true,[m
+[32m+[m[32m      executablePath:[m
+[32m+[m[32m        process.env.CHROME_PATH ||[m
+[32m+[m[32m        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",[m
+[32m+[m[32m      browserArgs: ["--no-sandbox", "--disable-setuid-sandbox"],[m
+[32m+[m[32m    })[m
+[32m+[m[32m    .then((client) => {[m
+       venomClient = client;[m
+       log("✅ Venom connected");[m
+     })[m
+[31m-    .catch(err => {[m
+[32m+[m[32m    .catch((err) => {[m
+       log("❌ Venom init failed: " + err.message);[m
+       setTimeout(startVenom, 10000);[m
+     });[m
+ }[m
+ [m
+[31m-// ✅ Venom Health Check[m
+[31m-app.get("/api/venom-status", (req, res) => {[m
+[31m-  if (venomClient) {[m
+[31m-    res.send("✅ Venom is connected");[m
+[31m-  } else {[m
+[31m-    res.status(503).send("❌ Venom is NOT connected");[m
+[31m-  }[m
+[31m-});[m
+ [m
+ // ✅ Handle MT4 webhook[m
+ app.post("/api/order", async (req, res) => {[m
