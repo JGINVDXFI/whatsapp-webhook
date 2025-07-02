@@ -1,0 +1,28 @@
+{
+  "name": "whatsapp-trade-alert",
+  "version": "1.0.0",
+  "description": "MT4 to WhatsApp trade alert system via Node.js, Ngrok and Venom Bot",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "update-webhook": "node updateWebhookUrl.js",
+    "start-bot": "node index.js && node updateWebhookUrl.js"
+  },
+  "author": "Gulshan Kumar",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0",
+    "venom-bot": "^5.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "overrides": {
+    "latest-version": "5.1.0"
+  }
+}

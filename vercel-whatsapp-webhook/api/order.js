@@ -1,32 +1,27 @@
-// Limit body size (optional safety)
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '1mb',
-    },
-  },
-};
+// api/order.js
+import express from "express";
+import forwardToVenomBot from "../utils/forwardToVenomBot.js"; // make sure this path is correct
 
-// Import the forwarding function
-import forwardToVenomBot from "../utils/forwardToVenomBot.js";
+const router = express.Router();
 
-// Serverless handler for POST requests
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).send("Method Not Allowed");
-  }
-
+router.post("/order", async (req, res) => {
   try {
     const data = req.body;
 
-    console.log("✅ JSON Received from MT4:", data);
+    console.log("✅ Received POST /api/order:", data);
 
-    // Forward to WhatsApp bot or log
-    await forwardToVenomBot(data);
+    // Optional safety check
+    if (!data.ticket || !data.pair || !data.type) {
+      return res.status(400).json({ error: "Missing fields in body" });
+    }
+
+    await forwardToVenomBot(data); // ⬅️ your own logic
 
     res.status(200).send("✅ Order forwarded to venom-bot server");
   } catch (error) {
-    console.error("❌ Error:", error.message);
-    res.status(500).send("❌ Error: " + error.message);
+    console.error("❌ Error in /api/order:", error.message);
+    res.status(500).send("❌ Internal error: " + error.message);
   }
-}
+});
+
+export default router;
