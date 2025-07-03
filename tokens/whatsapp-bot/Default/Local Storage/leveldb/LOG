@@ -1,3 +1,6 @@
-2025/07/02-13:32:14.045 40c Reusing MANIFEST C:\Users\Sony\Desktop\TRADING\tokens\whatsapp-bot\Default\Local Storage\leveldb/MANIFEST-000001
-2025/07/02-13:32:14.057 40c Recovering log #4
-2025/07/02-13:32:14.072 40c Reusing old log C:\Users\Sony\Desktop\TRADING\tokens\whatsapp-bot\Default\Local Storage\leveldb/000004.log 
+2025/07/02-17:38:46.386 1b08 Reusing MANIFEST C:\Users\Sony\Desktop\TRADING\tokens\whatsapp-bot\Default\Local Storage\leveldb/MANIFEST-000001
+2025/07/02-17:38:46.488 1b08 Recovering log #7
+2025/07/02-17:38:46.519 1b08 Reusing old log C:\Users\Sony\Desktop\TRADING\tokens\whatsapp-bot\Default\Local Storage\leveldb/000007.log 
+2025/07/02-21:31:40.290 2e04 Level-0 table #11: started
+2025/07/02-21:31:40.708 2e04 Level-0 table #11: 14448 bytes OK
+2025/07/02-21:31:40.821 2e04 Delete type=0 #7
